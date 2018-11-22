@@ -112,7 +112,7 @@ $(function() {
         beforeEach(function (done) {
             loadFeed(1, function () {
                 titleBefore = $('.header-title')[0].innerHTML;
-                loadFeed(1, function () {
+                loadFeed(2, function () {
                     titleAfter = $('.header-title')[0].innerHTML;
                     done();
                 });
@@ -120,7 +120,7 @@ $(function() {
         });
 
         it('has least a single .entry element within the .feed container after loadFeed called', function () {
-            expect(titleBefore).equals(titleAfter).toBe(false);
+            expect(titleBefore).toContain(titleAfter);
         });
     });
 
