@@ -34,7 +34,9 @@ $(function() {
         it('each feed has not a empty URL ', function () {
             allFeeds.forEach(function (feed) {
                 expect(feed.url).toBeDefined();
-                expect(feed.url.length).not.toBe(0);
+                // 检查 URL 格式是否正确的正规表达式
+                var regularExpressionUrl = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/;
+                expect(feed.url).toMatch(regularExpressionUrl);
             });
         });
 
@@ -54,7 +56,7 @@ $(function() {
 
     /*  Write a new test suite named "The menu" */
     describe('The menu', function () {
-        /* TODO: Write a test that ensures the menu element is
+        /* Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
@@ -64,7 +66,7 @@ $(function() {
             expect(body[0]).toHaveClass('menu-hidden');
         });
 
-        /*  Write a test that ensures the menu changes
+        /* Write a test that ensures the menu changes
          * visibility when the menu icon is clicked. This test
          * should have two expectations: does the menu display when
          * clicked and does it hide when clicked again.
@@ -83,7 +85,7 @@ $(function() {
 
     /*  Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function () {
-        /*  Write a test that ensures when the loadFeed
+        /* Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
@@ -120,7 +122,7 @@ $(function() {
         });
 
         it('has least a single .entry element within the .feed container after loadFeed called', function () {
-            expect(titleBefore).toContain(titleAfter);
+            expect(titleBefore).not.toContain(titleAfter);
         });
     });
 
