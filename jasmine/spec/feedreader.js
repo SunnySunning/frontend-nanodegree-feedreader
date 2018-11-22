@@ -34,7 +34,7 @@ $(function() {
         it('each feed has not a empty URL ', function () {
             allFeeds.forEach(function (feed) {
                 expect(feed.url).toBeDefined();
-                expect(feed.url).not.toBeNull();
+                expect(feed.url.length).not.toBe(0);
             });
         });
 
@@ -46,7 +46,7 @@ $(function() {
         it('each feed has not a empty name ', function () {
             allFeeds.forEach(function (feed) {
                 expect(feed.name).toBeDefined();
-                expect(feed.name).not.toBeNull();
+                expect(feed.name.length).not.toBe(0);
             });
         });
     });
@@ -90,15 +90,12 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function (done) {
-            loadFeed(1, function () {
-                done();
-            });
+            loadFeed(1, done);
         });
 
-        it('has least a single .entry element within the .feed container after loadFeed called', function (done) {
+        it('has least a single .entry element within the .feed container after loadFeed called', function () {
             var feedList = $('.feed-list');
             expect(feedList.length).toBeGreaterThanOrEqual(1);
-            done();
         });
 
     });
@@ -110,17 +107,20 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        var titleBefore = $('.header-title')[0].innerHTML;
+        var titleBefore,
+            titleAfter;
         beforeEach(function (done) {
             loadFeed(1, function () {
-                done();
+                titleBefore = $('.header-title')[0].innerHTML;
+                loadFeed(1, function () {
+                    titleAfter = $('.header-title')[0].innerHTML;
+                    done();
+                });
             });
         });
 
-        it('has least a single .entry element within the .feed container after loadFeed called', function (done) {
-            var titleAfter = $('.header-title')[0].innerHTML;
-            expect(titleBefore).toEqual(titleBefore);
-            done();
+        it('has least a single .entry element within the .feed container after loadFeed called', function () {
+            expect(titleBefore).equals(titleAfter).toBe(false);
         });
     });
 
